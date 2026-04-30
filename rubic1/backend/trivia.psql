@@ -1,0 +1,90 @@
+--
+-- PostgreSQL database dump for the Trivia API project.
+-- To restore: psql trivia < trivia.psql
+--
+
+-- Drop existing tables (order respects foreign-key constraint)
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS categories;
+
+-- -----------------------------------------------------------------------
+-- Table: categories
+-- -----------------------------------------------------------------------
+CREATE TABLE categories (
+    id   SERIAL PRIMARY KEY,
+    type VARCHAR NOT NULL UNIQUE
+);
+
+-- -----------------------------------------------------------------------
+-- Table: questions
+-- -----------------------------------------------------------------------
+CREATE TABLE questions (
+    id         SERIAL PRIMARY KEY,
+    question   VARCHAR NOT NULL,
+    answer     VARCHAR NOT NULL,
+    difficulty INTEGER NOT NULL,
+    rating     INTEGER NOT NULL DEFAULT 1,
+    category   INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------------------------
+-- Seed data: categories
+-- -----------------------------------------------------------------------
+INSERT INTO categories (id, type) VALUES
+    (1, 'Science'),
+    (2, 'Art'),
+    (3, 'Geography'),
+    (4, 'History'),
+    (5, 'Entertainment'),
+    (6, 'Sports');
+
+-- -----------------------------------------------------------------------
+-- Seed data: questions
+-- -----------------------------------------------------------------------
+INSERT INTO questions (id, question, answer, difficulty, rating, category) VALUES
+    (1,  'What is the heaviest organ in the human body?',
+         'The Liver', 4, 1, 1),
+    (2,  'Who invented Peanut Butter?',
+         'George Washington Carver', 2, 1, 4),
+    (3,  'What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?',
+         'Tom Cruise', 4, 1, 5),
+    (4,  'What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?',
+         'Edward Scissorhands', 3, 1, 5),
+    (5,  'What boxer''s original name is Cassius Clay?',
+         'Muhammad Ali', 1, 1, 4),
+    (6,  'What movie earned Tom Hanks his third straight Oscar nomination, in 1996?',
+         'Apollo 13', 4, 1, 5),
+    (7,  'What is the largest lake in Africa?',
+         'Lake Victoria', 2, 1, 3),
+    (8,  'In which royal palace would you find the Hall of Mirrors?',
+         'The Palace of Versailles', 3, 1, 3),
+    (9,  'The Taj Mahal is located in which Indian city?',
+         'Agra', 2, 1, 3),
+    (10, 'Which Dutch graphic artist–initials M.C.– was a creator of optical illusions?',
+         'Escher', 1, 1, 2),
+    (11, 'La Giaconda is better known as what?',
+         'Mona Lisa', 3, 1, 2),
+    (12, 'How many paintings did Van Gogh sell in his lifetime?',
+         'One', 4, 1, 2),
+    (13, 'Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?',
+         'Jackson Pollock', 2, 1, 2),
+    (14, 'What is the chemical formula for water?',
+         'H2O', 1, 1, 1),
+    (15, 'Which gas makes up approximately 78% of Earth''s atmosphere?',
+         'Nitrogen', 2, 1, 1),
+    (16, 'What is the powerhouse of the cell?',
+         'Mitochondria', 1, 1, 1),
+    (17, 'Hematology is a branch of medicine involving the study of what?',
+         'Blood', 4, 1, 1),
+    (18, 'Which country won the first ever FIFA World Cup in 1930?',
+         'Uruguay', 4, 1, 6),
+    (19, 'Which darts player is known by the nickname "The Power"?',
+         'Phil Taylor', 2, 1, 6),
+    (20, 'In what year was the first Formula One World Championship held?',
+         '1950', 3, 1, 6);
+
+-- -----------------------------------------------------------------------
+-- Reset sequences so the next INSERT auto-increments correctly
+-- -----------------------------------------------------------------------
+SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories));
+SELECT setval('questions_id_seq',  (SELECT MAX(id) FROM questions));

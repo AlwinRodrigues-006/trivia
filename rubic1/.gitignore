@@ -1,0 +1,43 @@
+# Flask / Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+instance/
+.webassets-cache
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables (secrets)
+# .env is intentionally tracked so the project works out-of-the-box for reviewers.
+# Do NOT store production secrets here.
+*.env.bak
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
